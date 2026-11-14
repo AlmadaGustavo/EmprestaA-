@@ -1,0 +1,14 @@
+{
+  "name": "aluguel-dapp",
+  "version": "1.0.0",
+  "description": "dApp de aluguel de equipamentos com caução (Ethereum/Sepolia)",
+  "license": "MIT",
+  "scripts": {
+    "test": "node test/teste-contrato.js"
+  },
+  "devDependencies": {
+    "ganache": "^7.9.2",
+    "solc": "^0.8.38",
+    "web3": "^4.16.0"
+  }
+}
