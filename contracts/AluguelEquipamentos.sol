@@ -6,7 +6,6 @@ pragma solidity ^0.8.24;
 ///         com caução custodiada pelo contrato. Locador e locatário não precisam confiar um no outro:
 ///         o ETH fica retido e só é liberado conforme o estado do aluguel.
 /// @dev Pagamentos usam o padrão "pull payment": as regras só creditam `saldos`; quem recebe chama `sacar`.
-///      Nenhuma biblioteca externa foi usada.
 contract AluguelEquipamentos {
     // =====================================================================
     // [Recurso: StructsEEnums]
