@@ -10,7 +10,6 @@ Aplicação descentralizada para anunciar e alugar equipamentos na Ethereum Sepo
 |---|---|
 | `[Gustavo Almada]` | `[Contrato Solidity / testes/ Integração Web3 / MetaMask]` |
 | `[Leonardo Melo]` | `[Frontend / interface/ Documentação / QA / apresentação]` |
-> Preencher os nomes e os papéis reais da equipe antes da entrega.
 
 
 ## 2. Deploy na Sepolia
