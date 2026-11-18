@@ -144,9 +144,8 @@ A hospedagem pública na Vercel é requisito do trabalho.
 7. Conectar a carteira do dono, alterar a taxa e, se houver uma disputa preparada, demonstrar sua resolução.
 8. Provocar uma validação (por exemplo, tentar uma ação com conta sem permissão) e mostrar a mensagem amigável.
 
-- **Vídeo de demonstração (3 a 5 minutos):** `[INSERIR LINK]`
-- **Slides em PDF:** `docs/slides.pdf` `[ADICIONAR ARQUIVO]`
-- **Capturas de tela:** adicionar em `docs/prints/`.
+- **Vídeo de demonstração (3 a 5 minutos):** 
+- **Slides em PDF:** `docs/slides.pdf` 
 
 ## 10. Limitações conhecidas e melhorias futuras
 
@@ -157,7 +156,20 @@ A hospedagem pública na Vercel é requisito do trabalho.
 
 ## 11. Uso de ferramentas de IA
 
-`[DESCREVER COM TRANSPARÊNCIA SE E COMO FERRAMENTAS DE IA FORAM UTILIZADAS: revisão de código, sugestões de interface, documentação, testes etc.]`
+`O projeto foi concebido, desenvolvido, testado e implantado pela equipe.
+Como colaboração, foi utilizado o assistente de IA **Claude (Anthropic)** como apoio, para tirar dúvidas e auxiliar na escrita, na revisão e na organização do material.
+As decisões de projeto, a execução, os testes e a validação do resultado foram feitos pela equipe, que assume a autoria e a responsabilidade por todo o conteúdo entregue.
+
+| Parte do projeto | Papel da IA (colaboração) |
+|---|---|
+| Contrato (`contracts/AluguelEquipamentos.sol`) | Apoio na escrita do código, dúvidas sobre Solidity e boas práticas de segurança (pull payment, checks-effects-interactions, reentrância) e auxílio nos comentários NatSpec. |
+| Testes (`test/teste-contrato.js`) | Auxílio na montagem da suíte de 49 verificações. Os testes foram executados e conferidos pela equipe. |
+| Documentação | Auxílio na redação e na organização do README, de `docs/README_BACKEND.md` e de `docs/INTEGRACAO_FRONTEND.md`. |
+| Frontend | Auxílio na escrita de partes do `app.js`, integradas, testadas e ajustadas pela equipe. |
+| Slides | Geração do arquivo PDF (`docs/slides.pdf`). |
+
+Foram feitos exclusivamente pela equipe: o deploy na Sepolia pelo Remix com a MetaMask, a verificação do código no Etherscan,
+a publicação na Vercel, os testes na rede de teste, a gravação do vídeo de demonstração e as capturas de tela.`
 
 ## 12. Estrutura do repositório
 
@@ -168,13 +180,13 @@ EmprestaA-/
 ├── docs/
 │   ├── INTEGRACAO_FRONTEND.md
 │   ├── README_BACKEND.md
-│   ├── slides.pdf              # adicionar
-│   └── prints/                 # adicionar capturas
+│   ├── slides.pdf             
+│   └── prints/                 
 ├── frontend/
 │   ├── index.html
 │   ├── style.css
 │   ├── app.js
-│   └── contrato.js             # ABI + endereço Sepolia
+│   └── contrato.js            
 ├── test/
 │   └── teste-contrato.js
 └── README.md
