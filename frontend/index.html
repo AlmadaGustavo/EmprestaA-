@@ -3,82 +3,135 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Aluguel de Equipamentos</title>
-  <link rel="stylesheet" href="styles.css">
+  <meta name="theme-color" content="#126640">
+  <meta name="description" content="Plataforma descentralizada para aluguel de equipamentos com caução na Ethereum Sepolia.">
+  <title>EmprestaAÍ — Aluguel de equipamentos</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header>
-    <h1>Aluguel de Equipamentos</h1>
-    <button id="connectBtn">Conectar MetaMask</button>
+  <header class="topbar">
+    <div>
+      <p class="eyebrow">DAPP · ETHEREUM SEPOLIA</p>
+      <h1>EmprestaAÍ</h1>
+      <p class="subtitle">Alugue, anuncie e acompanhe equipamentos com transparência.</p>
+    </div>
+    <button id="connectBtn" type="button">Conectar MetaMask</button>
   </header>
 
   <main>
-    <p id="account">Carteira não conectada</p>
+    <div id="configBanner" class="notice warning" hidden>
+      <strong>Contrato não configurado.</strong> Confira o endereço e a ABI em <code>contrato.js</code>.
+    </div>
+    <div id="networkBanner" class="notice warning" hidden>
+      <span>Você está em outra rede. Esta aplicação funciona na Ethereum Sepolia.</span>
+      <button id="switchNetworkBtn" type="button">Trocar para Sepolia</button>
+    </div>
 
-    <section>
-      <h2>Equipamentos disponíveis</h2>
-      <div class="filters">
-        <select id="categoryFilter">
-          <option value="">Todas as categorias</option>
-          <option value="CAMERA">Câmeras</option>
-          <option value="AUDIO">Áudio</option>
-          <option value="BIKE">Mobilidade</option>
-          <option value="FERRAMENTA">Ferramentas</option>
-          <option value="OUTROS">Outros</option>
-        </select>
-        <label><input id="availableOnly" type="checkbox" checked> Apenas disponíveis</label>
-        <button id="refreshBtn">Atualizar lista</button>
+    <section id="walletInfo" class="wallet-panel" hidden>
+      <div class="wallet-heading">
+        <div>
+          <span class="eyebrow">CARTEIRA CONECTADA</span>
+          <p id="account" class="address">Carteira não conectada</p>
+        </div>
+        <span id="roleBadge" class="role-badge">Usuário</span>
       </div>
-      <div id="catalog">Conecte sua carteira para carregar os equipamentos.</div>
-      <button id="loadMore" hidden>Carregar mais</button>
+      <div class="metrics">
+        <article class="metric"><span>Saldo da carteira</span><strong id="walletBalance">— ETH</strong></article>
+        <article class="metric"><span>Saldo na plataforma</span><strong id="balance">— ETH</strong></article>
+        <article class="metric"><span>Reputação</span><strong id="reputation">—</strong></article>
+      </div>
+      <p id="dayInfo" class="muted"></p>
     </section>
 
     <section id="listingSection" hidden>
-      <h2>Cadastrar equipamento</h2>
-      <form id="listingForm">
-        <label>Nome <input name="name" maxlength="64" required></label>
-        <label>Categoria
-          <select name="category" required>
-            <option value="CAMERA">Câmeras</option><option value="AUDIO">Áudio</option>
-            <option value="BIKE">Mobilidade</option><option value="FERRAMENTA">Ferramentas</option>
-            <option value="OUTROS">Outros</option>
-          </select>
-        </label>
-        <label>Preço por dia (ETH) <input name="price" type="number" min="0" step="any" required></label>
-        <label>Caução (ETH) <input name="deposit" type="number" min="0" step="any" required></label>
-        <button type="submit">Cadastrar</button>
+      <div class="section-heading"><div><p class="eyebrow">COMPARTILHE</p><h2>Anunciar equipamento</h2></div></div>
+      <form id="listingForm" class="form-grid">
+        <label>Nome do equipamento<input name="name" maxlength="64" placeholder="Ex.: Câmera Canon" required></label>
+        <label>Categoria<select name="category" required>
+          <option value="CAMERA">Câmeras</option><option value="AUDIO">Áudio</option>
+          <option value="BIKE">Mobilidade</option><option value="FERRAMENTA">Ferramentas</option>
+          <option value="OUTROS">Outros</option>
+        </select></label>
+        <label>Preço por dia (ETH)<input name="price" type="number" min="0.000000000000000001" step="any" placeholder="0.001" required></label>
+        <label>Caução (ETH)<input name="deposit" type="number" min="0.000000000000000001" step="any" placeholder="0.005" required></label>
+        <button type="submit">Cadastrar equipamento</button>
       </form>
+      <div class="admin-subsection">
+        <h3>Gerenciar locatários dos meus equipamentos</h3>
+        <p class="muted">Apenas o locador do equipamento informado pode bloquear ou desbloquear o endereço.</p>
+        <form id="blockForm" class="form-grid">
+          <label>ID do equipamento<input name="id" type="number" min="1" step="1" required></label>
+          <label>Endereço do locatário<input name="address" type="text" placeholder="0x…" required></label>
+          <label class="checkbox-label"><input name="block" type="checkbox"> Bloquear endereço (desmarcado = desbloquear)</label>
+          <button type="submit">Salvar bloqueio</button>
+        </form>
+      </div>
+    </section>
+
+    <section id="catalogSection">
+      <div class="section-heading"><div><p class="eyebrow">DESCUBRA</p><h2>Catálogo de equipamentos</h2></div><button id="refreshBtn" class="button-secondary" type="button">Atualizar</button></div>
+      <div class="filters">
+        <label>Categoria<select id="categoryFilter">
+          <option value="">Todas as categorias</option><option value="CAMERA">Câmeras</option>
+          <option value="AUDIO">Áudio</option><option value="BIKE">Mobilidade</option>
+          <option value="FERRAMENTA">Ferramentas</option><option value="OUTROS">Outros</option>
+        </select></label>
+        <label class="checkbox-label"><input id="availableOnly" type="checkbox" checked> Apenas disponíveis</label>
+      </div>
+      <div id="catalog" class="list-placeholder">Conecte sua carteira para carregar os equipamentos.</div>
+      <button id="loadMore" class="button-secondary" type="button" hidden>Carregar mais</button>
     </section>
 
     <section id="rentalsSection" hidden>
-      <h2>Meus aluguéis</h2>
-      <button id="refreshRentals">Atualizar aluguéis</button>
-      <div id="rentals">Conecte sua carteira para ver seus aluguéis.</div>
+      <div class="section-heading"><div><p class="eyebrow">ACOMPANHAMENTO</p><h2>Meus aluguéis</h2></div><button id="refreshRentals" class="button-secondary" type="button">Atualizar</button></div>
+      <div id="rentals" class="list-placeholder">Você ainda não tem aluguéis.</div>
     </section>
 
     <section id="balanceSection" hidden>
-      <h2>Meu saldo</h2>
-      <p><strong id="balance">— ETH</strong></p>
-      <form id="withdrawForm">
-        <label>Valor para sacar (ETH) <input name="amount" type="number" min="0" step="any" required></label>
-        <button type="submit">Sacar</button>
+      <div class="section-heading"><div><p class="eyebrow">FINANCEIRO</p><h2>Saldo disponível na plataforma</h2></div></div>
+      <form id="withdrawForm" class="inline-form">
+        <label>Valor para sacar (ETH)<input name="amount" type="number" min="0.000000000000000001" step="any" placeholder="0.001" required></label>
+        <button type="submit">Sacar valor</button>
+        <button id="withdrawAll" class="button-secondary" type="button">Sacar todo o saldo</button>
       </form>
+    </section>
+
+    <section id="eventsSection" hidden>
+      <div class="section-heading"><div><p class="eyebrow">TRANSPARÊNCIA</p><h2>Histórico da blockchain</h2></div><button id="refreshEvents" class="button-secondary" type="button">Atualizar eventos</button></div>
+      <ul id="events" class="event-list"><li>Conecte sua carteira para consultar os eventos.</li></ul>
+    </section>
+
+    <section id="adminSection" class="admin-panel" hidden>
+      <div class="section-heading"><div><p class="eyebrow">ACESSO RESTRITO</p><h2>Painel administrativo</h2></div><span class="role-badge admin">Dono do contrato</span></div>
+      <div class="admin-summary"><span>Taxa atual da plataforma</span><strong id="currentTax">—</strong></div>
+      <form id="taxForm" class="inline-form">
+        <label>Nova taxa (basis points, máximo 1000 = 10%)<input name="bps" type="number" min="0" max="1000" step="1" placeholder="200" required></label>
+        <button type="submit">Atualizar taxa</button>
+      </form>
+      <div class="admin-subsection"><h3>Disputas abertas</h3><div id="disputes" class="list-placeholder">Carregando disputas…</div></div>
+    </section>
+
+    <section id="txPanel" class="tx-panel" aria-live="polite">
+      <h2>Estado da transação</h2>
+      <p id="txStatus" class="tx-status" hidden></p>
     </section>
   </main>
 
   <dialog id="rentDialog">
     <form id="rentForm">
-      <h2>Alugar equipamento</h2>
+      <p class="eyebrow">NOVA RESERVA</p><h2>Alugar equipamento</h2>
       <input name="id" type="hidden">
-      <p id="rentName"></p>
-      <label>Dias (1 a 30) <input name="days" type="number" min="1" max="30" value="1" required></label>
+      <p id="rentName" class="dialog-item"></p>
+      <label>Duração (1 a 30 dias)<input name="days" type="number" min="1" max="30" value="1" required></label>
       <p>Total com caução: <strong id="rentTotal">— ETH</strong></p>
-      <button type="submit">Confirmar aluguel</button>
-      <button type="button" id="cancelRent">Cancelar</button>
+      <p id="rentWarning" class="notice warning" role="status"></p>
+      <div class="dialog-actions"><button type="submit">Confirmar aluguel</button><button type="button" id="cancelRent" class="button-secondary">Cancelar</button></div>
     </form>
   </dialog>
 
-  <p id="message" role="status"></p>
+  <p id="message" role="status" aria-live="polite"></p>
+  <footer><span>EmprestaAÍ · Projeto acadêmico</span><span>Rede de testes Ethereum Sepolia — sem valor monetário real</span></footer>
+
   <script src="https://cdn.jsdelivr.net/npm/web3@4.16.0/dist/web3.min.js"></script>
   <script src="contrato.js"></script>
   <script src="app.js"></script>

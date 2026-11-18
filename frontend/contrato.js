@@ -1,6 +1,6 @@
 // Gerado a partir do contrato compilado. NÃO edite o ABI à mão.
 // Depois do deploy na Sepolia, troque ENDERECO_CONTRATO pelo endereço real.
-const ENDERECO_CONTRATO = "0xCOLE_AQUI_O_ENDERECO_DO_CONTRATO";
+const ENDERECO_CONTRATO = "0x9c37f732057a68bb7892c6b0eed65ba762f70a54";
 const CHAIN_ID_SEPOLIA = 11155111; // 0xaa36a7
 const ABI = [
   {
