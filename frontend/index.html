@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Aluguel de Equipamentos</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <h1>Aluguel de Equipamentos</h1>
+    <button id="connectBtn">Conectar MetaMask</button>
+  </header>
+
+  <main>
+    <p id="account">Carteira não conectada</p>
+
+    <section>
+      <h2>Equipamentos disponíveis</h2>
+      <div class="filters">
+        <select id="categoryFilter">
+          <option value="">Todas as categorias</option>
+          <option value="CAMERA">Câmeras</option>
+          <option value="AUDIO">Áudio</option>
+          <option value="BIKE">Mobilidade</option>
+          <option value="FERRAMENTA">Ferramentas</option>
+          <option value="OUTROS">Outros</option>
+        </select>
+        <label><input id="availableOnly" type="checkbox" checked> Apenas disponíveis</label>
+        <button id="refreshBtn">Atualizar lista</button>
+      </div>
+      <div id="catalog">Conecte sua carteira para carregar os equipamentos.</div>
+      <button id="loadMore" hidden>Carregar mais</button>
+    </section>
+
+    <section id="listingSection" hidden>
+      <h2>Cadastrar equipamento</h2>
+      <form id="listingForm">
+        <label>Nome <input name="name" maxlength="64" required></label>
+        <label>Categoria
+          <select name="category" required>
+            <option value="CAMERA">Câmeras</option><option value="AUDIO">Áudio</option>
+            <option value="BIKE">Mobilidade</option><option value="FERRAMENTA">Ferramentas</option>
+            <option value="OUTROS">Outros</option>
+          </select>
+        </label>
+        <label>Preço por dia (ETH) <input name="price" type="number" min="0" step="any" required></label>
+        <label>Caução (ETH) <input name="deposit" type="number" min="0" step="any" required></label>
+        <button type="submit">Cadastrar</button>
+      </form>
+    </section>
+
+    <section id="rentalsSection" hidden>
+      <h2>Meus aluguéis</h2>
+      <button id="refreshRentals">Atualizar aluguéis</button>
+      <div id="rentals">Conecte sua carteira para ver seus aluguéis.</div>
+    </section>
+
+    <section id="balanceSection" hidden>
+      <h2>Meu saldo</h2>
+      <p><strong id="balance">— ETH</strong></p>
+      <form id="withdrawForm">
+        <label>Valor para sacar (ETH) <input name="amount" type="number" min="0" step="any" required></label>
+        <button type="submit">Sacar</button>
+      </form>
+    </section>
+  </main>
+
+  <dialog id="rentDialog">
+    <form id="rentForm">
+      <h2>Alugar equipamento</h2>
+      <input name="id" type="hidden">
+      <p id="rentName"></p>
+      <label>Dias (1 a 30) <input name="days" type="number" min="1" max="30" value="1" required></label>
+      <p>Total com caução: <strong id="rentTotal">— ETH</strong></p>
+      <button type="submit">Confirmar aluguel</button>
+      <button type="button" id="cancelRent">Cancelar</button>
+    </form>
+  </dialog>
+
+  <p id="message" role="status"></p>
+  <script src="https://cdn.jsdelivr.net/npm/web3@4.16.0/dist/web3.min.js"></script>
+  <script src="contrato.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
